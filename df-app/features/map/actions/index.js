@@ -1,10 +1,7 @@
 export const DATA_AVAILABLE = 'DATA_AVAILABLE';
 
 import { GetDiscsRoute } from '../../../constants/api-routes';
-//Import the sample data
-import Data from '../dummy.json';
 
- 
 export function getData(){
 	return (dispatch) => {
  
@@ -12,7 +9,6 @@ export function getData(){
 		//For this example, I will be using the sample data in the json file
 		//delay the retrieval [Sample reasons only]
 		asyncGetDiscs("dela").then((data) => { 
-			console.log(data)
 			dispatch({type: DATA_AVAILABLE, data:data});
 		});
 	

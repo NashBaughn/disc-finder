@@ -29,6 +29,7 @@ import {
 import MapView from "react-native-maps";
 import MapHeader from "./map-header";
 import Modal from "react-native-modal";
+import DiscInfo from "./disc-info";
 
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
@@ -61,18 +62,24 @@ export default class MapScreen extends React.Component {
 		this.state = {
 			visibleModal: false,
 		}
+		var lost = this.props.data.lost;
+	
+		this.state = {data: {markers:lost}};
 	}
 
 
 	_toggleMap(val) {
-		console.log("- - - " + val)
+		console.log(val)
+		console.log(this.props)
 		switch(val) {
 			case "LOST":
-				
+				this.setState({data: {markers: this.props.data.lost}});
 			case "FOUND":
-
+				this.setState({data: {markers: this.props.data.found}});
 			case "BOTH":
+				this.setState({data: {markers: this.props.data.unkown}});
 
+			console.log(this.data.props.markers);
 		}
 	}
 
@@ -119,7 +126,6 @@ export default class MapScreen extends React.Component {
 	}
 
 	_getData() {
-
 		console.log(this.props.data);
 		console.log("- - - -");
 	}
@@ -158,16 +164,19 @@ export default class MapScreen extends React.Component {
 			        <Text>Filter</Text>
 			      </View>
 			    </TouchableOpacity>
-			    <Modal isVisible={this.state.visibleModal === true} style={styles.bottomModal}>
-		        <View style={styles.modalContent}>
-				      <Text>Hello!</Text>
-				      <TouchableOpacity onPress={() => {this._showModal(false)}}>
+			 {/*   <Modal isVisible={this.state.visibleModal === true} style={styles.bottomModal}>
+		           <View style={styles.modalContent}>
+				        <Text>Hello!</Text>
+				        <TouchableOpacity onPress={() => {this._showModal(false)}}>
 					      <View style={styles.button}>
 					        <Text>Close</Text>
 					      </View>
 					    </TouchableOpacity>
 				    </View>
-		      </Modal> 
+		        </Modal> */}
+		        <Modal isVisible={this.state.visibleModal === true} style={styles.bottomModal}>
+		        	<DiscInfo data={this.state.selected} toggleModal={() => {this._showModal}}/>
+		        </Modal>
 					<MapView
 						ref={map => this.map = map}
 						initialRegion={this.props.data.region}
@@ -194,7 +203,7 @@ export default class MapScreen extends React.Component {
 							);
 						})}
 					</MapView>
-					<Animated.ScrollView
+					{/*<Animated.ScrollView
 						horizontal
 						scrollEventThrottle={1}
 						showsHorizontalScrollIndicator={false}
@@ -229,7 +238,7 @@ export default class MapScreen extends React.Component {
 								</View>
 							</View>
 						))}
-					</Animated.ScrollView>
+					</Animated.ScrollView>*/}
 				</View>
 			);
 		}
@@ -241,14 +250,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	button: {
-    backgroundColor: 'lightblue',
-    padding: 12,
-    margin: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 4,
-    borderColor: 'rgba(0, 0, 0, 0.1)',
-  },
+		backgroundColor: 'lightblue',
+		padding: 12,
+		margin: 16,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 4,
+		borderColor: 'rgba(0, 0, 0, 0.1)',
+	},
 	filter: {
 		position: "absolute",
 		bottom: 30,

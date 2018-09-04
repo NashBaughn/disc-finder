@@ -2,26 +2,37 @@ import { DATA_AVAILABLE } from "../actions/";
 
 let dataState = {data:[], loading:true};
 
-//dummy content
 const mapData = (state = dataState, action) => {
   switch (action.type) {
-        case DATA_AVAILABLE:
-        	console.log("B B B B B")
-             
+        case DATA_AVAILABLE:          
             var markers = action.data.markers;
-            var formattedMarkers = [];
+            var lost  = [];
+            var found = [];
+            var unkown = [];
+
 
             for(var i=0; i<markers.length; i++){
-            	markers[i].coordinate = {
-            		longitude: markers[i].longitude,
-            		latitude: markers[i].latitude
+            	var curr = markers[i];
+                curr.coordinate = {
+            		longitude: curr.longitude,
+            		latitude: curr.latitude
             	}
+                if(curr.status == 'lost'){
+                    lost.push(curr);
+                } else if (curr.status == 'found'){
+                    found.push(curr);
+                } else {
+                    unkown.push(curr);
+                }
             }
 
             var frmt = {
             	region: action.data.region,
-            	markers: markers
-            }
+            	lost: lost,
+                found: found,
+                unkown: unkown,
+                markers: lost
+            }   
 
             state = Object.assign({}, state, { data: frmt, loading:false });
             return state;
