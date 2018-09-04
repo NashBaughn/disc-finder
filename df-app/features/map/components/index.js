@@ -70,17 +70,17 @@ export default class MapScreen extends React.Component {
 
 	_toggleMap(val) {
 		console.log(val)
-		console.log(this.props)
-		switch(val) {
-			case "LOST":
-				this.setState({data: {markers: this.props.data.lost}});
-			case "FOUND":
-				this.setState({data: {markers: this.props.data.found}});
-			case "BOTH":
-				this.setState({data: {markers: this.props.data.unkown}});
+		// console.log(this.props)
+		// switch(val) {
+		// 	case "LOST":
+		// 		this.setState({data: {markers: this.props.data.lost}});
+		// 	case "FOUND":
+		// 		this.setState({data: {markers: this.props.data.found}});
+		// 	case "BOTH":
+		// 		this.setState({data: {markers: this.props.data.unkown}});
 
-			console.log(this.data.props.markers);
-		}
+		// 	console.log(this.data.props.markers);
+		// }
 	}
 
 	componentWillMount() {
